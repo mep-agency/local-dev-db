@@ -1,0 +1,58 @@
+{
+  "name": "@mep-agency/local-dev-db",
+  "version": "1.0.0-alpha1",
+  "private": false,
+  "description": "A zero-config local MariaDB instance for local development (using Docker)",
+  "author": "Marco Lipparini <developer@liarco.net>",
+  "license": "MIT",
+  "keywords": [
+    "development",
+    "local",
+    "database",
+    "db",
+    "mysql",
+    "mariadb"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mep-agency/local-dev-db.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mep-agency/local-dev-db/issues"
+  },
+  "scripts": {
+    "build": "rm -rf ./bin && rm -rf ./build && tsc && pkg -c package.json ./build/src/index.js && yarn postinstall",
+    "watch": "tsc --watch",
+    "format": "prettier --write \"**/*.{ts,md,scss,css,js}\"",
+    "lint": "prettier --check \"**/*.{ts,md,scss,css,js}\"",
+    "postinstall": "node postinstall.js install"
+  },
+  "bin": {
+    "ldd": "./ldd"
+  },
+  "files": [
+    "bin",
+    "docker",
+    "LICENCE",
+    "README.md"
+  ],
+  "pkg": {
+    "targets": [
+      "linux-x64",
+      "macos-x64",
+      "win-x64"
+    ],
+    "outputPath": "bin"
+  },
+  "devDependencies": {
+    "@inquirer/prompts": "^3.0.0",
+    "@types/mysql": "^2.15.21",
+    "commander": "^11.0.0",
+    "docker-cli-js": "^2.10.0",
+    "mysql": "^2.18.1",
+    "pkg": "^5.8.1",
+    "prettier": "^2.8.8",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {}
+}

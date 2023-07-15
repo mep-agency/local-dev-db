@@ -1,0 +1,9 @@
+.github
+build
+src
+
+*.log
+.DS_Store
+node_modules
+.cache
+*.lock

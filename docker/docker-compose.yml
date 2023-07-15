@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  db:
+    image: "mariadb:${LDD_DB_IMAGE_TAG:-latest}"
+    ports:
+      - "${LDD_DB_PORT:-3306}:3306"
+    networks:
+      - private
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: "${LDD_DB_ROOT_PASSWORD:-not-secure-pwd}"
+      MARIADB_DATABASE: defaultdb
+  phpmyadmin:
+    image: "phpmyadmin:${LDD_PMA_IMAGE_TAG:-latest}"
+    restart: always
+    ports:
+      - "${LDD_PMA_PORT:-8010}:80"
+    networks:
+      - private
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: "${LDD_DB_ROOT_PASSWORD:-not-secure-pwd}"
+      MYSQL_ROOT_PASSWORD: "${LDD_DB_ROOT_PASSWORD:-not-secure-pwd}"
+
+networks:
+  private:
+
+volumes:
+  db_data:

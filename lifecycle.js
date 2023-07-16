@@ -5,10 +5,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const BIN_BASE_DIR = `${__dirname}/bin/@mep-agency`;
-const BIN_BASE_NAME = `${BIN_BASE_DIR}/local-dev-db`;
+const BIN_BASE_DIR = `${__dirname}/bin`;
+const BIN_OUTPUT_PATH = `${BIN_BASE_DIR}/ldd`;
+const BIN_OPTIONS_DIR = `${BIN_BASE_DIR}/@mep-agency`;
+const BIN_OPTIONS_BASE_NAME = `${BIN_OPTIONS_DIR}/local-dev-db`;
 
-if (!fs.existsSync(path.dirname(BIN_BASE_DIR)) || !fs.statSync(path.dirname(BIN_BASE_DIR)).isDirectory()) {
+if (!fs.existsSync(BIN_OPTIONS_DIR) || !fs.statSync(BIN_OPTIONS_DIR).isDirectory()) {
   console.info('Binaries are not available, this probably means we are in a development environment... skipping!');
 
   process.exit(0);
@@ -24,7 +26,7 @@ const PLATFORM_MAPPING = {
   win32: 'win.exe',
 };
 
-async function install(callback) {
+async function postinstall(callback) {
   if (PLATFORM_MAPPING[process.platform] === undefined) {
     callback(`Unsupported platform: "${process.platform}"`);
   }
@@ -33,20 +35,20 @@ async function install(callback) {
     callback(`Unsupported architecture: "${process.arch}"`);
   }
 
-  const binaryNameTokens = [BIN_BASE_NAME, PLATFORM_MAPPING[process.platform], ARCH_MAPPING[process.arch]].filter(
+  const binaryNameTokens = [BIN_OPTIONS_BASE_NAME, PLATFORM_MAPPING[process.platform], ARCH_MAPPING[process.arch]].filter(
     (token) => token.length > 0,
   );
 
   console.info(`Copying the relevant binary for your platform ${process.platform} (${process.arch})`);
 
-  fs.copyFileSync(binaryNameTokens.join('-'), './ldd');
+  fs.copyFileSync(binaryNameTokens.join('-'), BIN_OUTPUT_PATH);
 
   callback(null);
 }
 
 // Parse command line arguments and call the right method
 var actions = {
-  install: install,
+  postinstall: postinstall,
 };
 
 const argv = process.argv;

@@ -1,6 +1,6 @@
 {
   "name": "@mep-agency/local-dev-db",
-  "version": "1.0.0-alpha4",
+  "version": "1.0.0-alpha5",
   "private": false,
   "description": "A zero-config local MariaDB instance for local development (using Docker)",
   "author": "Marco Lipparini <developer@liarco.net>",
@@ -25,10 +25,10 @@
     "watch": "tsc --watch",
     "format": "prettier --write \"**/*.{ts,md,scss,css,js}\"",
     "lint": "prettier --check \"**/*.{ts,md,scss,css,js}\"",
-    "install": "node lifecycle.js install"
+    "postinstall": "node lifecycle.js postinstall"
   },
   "bin": {
-    "ldd": "./ldd"
+    "ldd": "./bin/ldd"
   },
   "files": [
     "bin",

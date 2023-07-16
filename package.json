@@ -1,6 +1,6 @@
 {
   "name": "@mep-agency/local-dev-db",
-  "version": "1.0.0-alpha5",
+  "version": "1.0.0-alpha6",
   "private": false,
   "description": "A zero-config local MariaDB instance for local development (using Docker)",
   "author": "Marco Lipparini <developer@liarco.net>",
@@ -21,7 +21,7 @@
     "url": "https://github.com/mep-agency/local-dev-db/issues"
   },
   "scripts": {
-    "build": "rm -rf ./bin && rm -rf ./build && tsc && pkg -c package.json ./build/src/index.js",
+    "build": "rm -rf ./bin/@mep-agency && rm -rf ./build && tsc && pkg -c package.json ./build/src/index.js",
     "watch": "tsc --watch",
     "format": "prettier --write \"**/*.{ts,md,scss,css,js}\"",
     "lint": "prettier --check \"**/*.{ts,md,scss,css,js}\"",

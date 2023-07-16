@@ -7,16 +7,16 @@
 
 A zero-config local MariaDB instance for local development (using Docker) so you can finally stop doing things like:
 
-- Using SQLite for dev and MariaDB/MySQL for production
-- Installing a local database server directly
-- Spending a lot of time to get up and running on a new dev environment
+- Using different databases for dev and prod environments (e.g. SQLite vs MariaDB/MySQL)
+- Installing a local database server directly on your machine
+- Spending time getting up and running in a new development environment
 
-## How does it fit your workflow?
+## How does it fit into your workflow?
 
-While this tool is meant to be installed as a dependency to your projects, it actually runs as a single database server.
-This makes it possible to optimize the resources when working on multiple projects at the same time.
+While this tool is designed to be installed as a dependency in your projects, it actually runs as a single database server.
+This makes it possible to optimize resources when working on multiple projects at the same time.
 
-Feel free to install this tool as a dependency to all of your projects, CLI commands will act on the same instance and all of your databases will share the same storage volume.
+Feel free to install this tool as a dependency in any project where you need a MariaDB/MySQL database, CLI commands will act on the same instance and all your databases will share the same storage volume.
 
 ## Features
 
@@ -105,7 +105,7 @@ Stopping local database containers...
 
 ## Advanced configuration
 
-We hope you never have to use it, but just in case, here are some ENV vars you can set on your machine to customize the behavior of the application:
+We hope you never have to use them, but just in case, here are some ENV vars you can set on your machine to customize the behavior of the application:
 
 - `LDD_DB_IMAGE_TAG` (default: `latest`): we use the official [MariaDB](https://hub.docker.com/_/mariadb) Docker image. You can pick a different tag if you wish.
 - `LDD_DB_PORT` (default: `3306`): The database server will be attached to this port on your local machine. You can customize this to avoid any conflicts with other services.

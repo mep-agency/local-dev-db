@@ -1,6 +1,6 @@
 {
   "name": "@mep-agency/local-dev-db",
-  "version": "1.0.0-alpha7",
+  "version": "1.0.0-alpha8",
   "private": false,
   "description": "A zero-config local MariaDB instance for local development (using Docker)",
   "author": "Marco Lipparini <developer@liarco.net>",
@@ -21,39 +21,30 @@
     "url": "https://github.com/mep-agency/local-dev-db/issues"
   },
   "scripts": {
-    "build": "rm -rf ./bin/@mep-agency && rm -rf ./build && tsc && pkg -c package.json ./build/src/index.js",
+    "build": "rm -rf ./build && tsc",
     "watch": "tsc --watch",
     "format": "prettier --write \"**/*.{ts,md,scss,css,js}\"",
-    "lint": "prettier --check \"**/*.{ts,md,scss,css,js}\"",
-    "postinstall": "node lifecycle.js postinstall"
+    "lint": "prettier --check \"**/*.{ts,md,scss,css,js}\""
   },
   "bin": {
-    "ldd": "./bin/ldd"
+    "ldd": "./bin/ldd.js"
   },
   "files": [
     "bin",
+    "build",
     "docker",
-    "lifecycle.js",
     "LICENCE",
     "README.md"
   ],
-  "pkg": {
-    "targets": [
-      "linux-x64",
-      "macos-x64",
-      "win-x64"
-    ],
-    "outputPath": "bin"
-  },
   "devDependencies": {
-    "@inquirer/prompts": "^3.0.0",
     "@types/mysql": "^2.15.21",
-    "commander": "^11.0.0",
-    "docker-cli-js": "^2.10.0",
-    "mysql": "^2.18.1",
-    "pkg": "^5.8.1",
     "prettier": "^2.8.8",
     "typescript": "^5.1.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@inquirer/prompts": "^3.0.0",
+    "commander": "^11.0.0",
+    "docker-cli-js": "^2.10.0",
+    "mysql": "^2.18.1"
+  }
 }

@@ -1,4 +1,3 @@
-import path from 'path';
 import fs from 'fs';
 import { program } from 'commander';
 import { confirm } from '@inquirer/prompts';
@@ -7,9 +6,7 @@ import mysql from 'mysql';
 
 import packageInfo from '../package.json';
 
-let PACKAGE_INSTALLATION_PATH = path.normalize(
-  __dirname.startsWith('/snapshot') ? `${path.dirname(process.execPath)}/..` : `${__dirname}/../..`,
-);
+let PACKAGE_INSTALLATION_PATH = `${__dirname}/../..`;
 
 const dockerCompose: typeof dockerCommand = async (command, options) => {
   try {

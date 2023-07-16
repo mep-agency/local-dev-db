@@ -30,6 +30,10 @@ Feel free to install this tool as a dependency in any project where you need a M
 
 - **Docker:** this tool uses docker (compose) to spwan some containers for you. A basic default installation is usually more than enough (e.g. `brew install docker` or similar).
 
+## Project lifecycle, contribution and support policy
+
+Our policies are available on our [main oranization page](https://github.com/mep-agency#projects-lifecycle-contribution-and-support-policy).
+
 ## Original author
 
 - Marco Lipparini ([liarco](https://github.com/liarco))
@@ -70,7 +74,7 @@ Usage: ldd [options] [command]
 # ...
 ```
 
-## Starting a new project
+### Starting a new project
 
 Creating a brand new database for your project is pretty easy:
 

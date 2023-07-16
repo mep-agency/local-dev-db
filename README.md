@@ -52,7 +52,7 @@ Run the `ldd` binary to see the available commands:
 
 ```bash
 # With Yarn
-$ yarn ldd
+$ yarn ldd --help
 Usage: ldd [options] [command]
 
 A zero-config local MariaDB instance for local development (using Docker)

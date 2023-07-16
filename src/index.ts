@@ -8,7 +8,7 @@ import mysql from 'mysql';
 import packageInfo from '../package.json';
 
 let PACKAGE_INSTALLATION_PATH = path.normalize(
-  __dirname.startsWith('/snapshot') ? path.dirname(process.execPath) : `${__dirname}/../..`,
+  __dirname.startsWith('/snapshot') ? `${path.dirname(process.execPath)}/..` : `${__dirname}/../..`,
 );
 
 const dockerCompose: typeof dockerCommand = async (command, options) => {

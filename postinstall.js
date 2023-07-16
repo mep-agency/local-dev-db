@@ -3,10 +3,12 @@
 // Inspired by: https://blog.xendit.engineer/how-we-repurposed-npm-to-publish-and-distribute-our-go-binaries-for-internal-cli-23981b80911b
 
 const fs = require('fs');
+const path = require('path');
 
-const BIN_BASE_NAME = './bin/@mep-agency/local-dev-db';
+const BIN_BASE_DIR = `${__dirname}/bin/@mep-agency`;
+const BIN_BASE_NAME = `${BIN_BASE_DIR}/local-dev-db`;
 
-if (!fs.existsSync(BIN_BASE_NAME) || !fs.statSync(BIN_BASE_NAME).isDirectory()) {
+if (!fs.existsSync(path.dirname(BIN_BASE_DIR)) || !fs.statSync(path.dirname(BIN_BASE_DIR)).isDirectory()) {
   console.info('Binaries are not available, this probably means we are in a development environment... skipping!');
 
   process.exit(0);

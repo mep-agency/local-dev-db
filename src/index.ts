@@ -8,6 +8,16 @@ import packageInfo from '../package.json';
 
 let PACKAGE_INSTALLATION_PATH = `${__dirname}/../..`;
 
+interface DockerImagesCommandResult {
+  images: {
+    repository: string;
+    tag: string;
+    'image id': string;
+    created: string;
+    size: string;
+  }[];
+}
+
 const dockerCompose: typeof dockerCommand = async (command, options) => {
   try {
     return await dockerCommand(
@@ -65,12 +75,32 @@ program.name('ldd').description(packageInfo.description).version(packageInfo.ver
 program
   .command('start')
   .description('Starts your local DB server')
-  .action(async (str, options) => {
+  .action(async () => {
     console.info('Starting local database containers...');
+
+    const requiredImages = [
+      `mariadb:${process.env.LDD_DB_IMAGE_TAG ?? 'latest'}`,
+      `phpmyadmin:${process.env.LDD_PMA_IMAGE_TAG ?? 'latest'}`,
+    ];
+
+    const availableImagesImages = ((await dockerCommand('images', { echo: false })) as DockerImagesCommandResult).images
+      .map((imageData) => `${imageData.repository}:${imageData.tag}`)
+      .filter((imageName) => requiredImages.includes(imageName));
+
+    const missingImages = requiredImages.filter((requiredImage) => !availableImagesImages.includes(requiredImage));
+
+    if (missingImages.length > 0) {
+      console.info('');
+      console.info('The following images will be downloaded as they are required but not available:');
+      missingImages.map((image) => console.info(` - ${image}`));
+      console.info('');
+      console.info('This may take some time, please wait...');
+    }
 
     await dockerCompose('up -d');
 
     console.info('');
+    console.info('Done!');
     console.info(`A PhpMyAdmin instance is running on: http://127.0.0.1:${process.env.LDD_PMA_PORT ?? 8010}`);
   });
 

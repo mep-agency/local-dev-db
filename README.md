@@ -109,6 +109,34 @@ Stopping local database containers...
 
 ## Advanced configuration
 
+The goal of LDD is to speed up the process of setting up new projects and synchronizing a common system configuration across multiple environments. That's why we don't plan to support deep customization options.
+
+However, there are some common use cases that require a bit more flexibility, so the following features may help.
+
+### Project config file
+
+Each project usually requires its own database, and you will probably need to run most commands against it, depending on the project you are working on.
+
+The closest available `ldd.json` file is used to load the configuration for the current project:
+
+```json
+{
+  "dbName": "my-awesome-app"
+}
+```
+
+With the configuration above, any command will default to `my-awesome-app` as the `<db_name>` argument value if nothing is passed manually:
+
+```bash
+$ yarn ldd create
+Loading configuration from: /MyProjects/my-awesome-app/ldd.json
+Creating a new DB named "my-awesome-app"...
+
+# ...
+```
+
+### ENV variables
+
 We hope you never have to use them, but just in case, here are some ENV vars you can set on your machine to customize the behavior of the application:
 
 - `LDD_DB_IMAGE_TAG` (default: `latest`): we use the official [MariaDB](https://hub.docker.com/_/mariadb) Docker image. You can pick a different tag if you wish.

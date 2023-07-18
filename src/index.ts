@@ -132,10 +132,12 @@ program
     const username = databaseName;
     const userPwd = `${databaseName}-pwd`;
 
-    const confirmation = options.force === true || await confirm({
-      message: `This action will delete your database "${databaseName}" and cannot be reverted. Are you sure?`,
-      default: false,
-    });
+    const confirmation =
+      options.force === true ||
+      (await confirm({
+        message: `This action will delete your database "${databaseName}" and cannot be reverted. Are you sure?`,
+        default: false,
+      }));
 
     if (confirmation !== true) {
       console.info('Aborting...');
@@ -203,10 +205,12 @@ program
   .argument('<sql_file_path>', 'The SQL file to import')
   .option('-f,--force', 'Skip safety confirmation', false)
   .action(async (sqlFilePath, options) => {
-    const confirmation = options.force === true || await confirm({
-      message: 'This action will execute any SQL statement found in the given file and cannot be reverted. Are you sure?',
-      default: false,
-    });
+    const confirmation =
+      options.force === true ||
+      (await confirm({
+        message: 'This action will execute any SQL statement found in the given file and cannot be reverted. Are you sure?',
+        default: false,
+      }));
 
     if (confirmation !== true) {
       console.info('Aborting...');

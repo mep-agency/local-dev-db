@@ -127,11 +127,12 @@ program
   .command('drop')
   .description('Drops the given database and its default user (if they exist)')
   .argument('<db_name>', 'The database name')
-  .action(async (databaseName) => {
+  .option('-f,--force', 'Skip safety confirmation', false)
+  .action(async (databaseName, options) => {
     const username = databaseName;
     const userPwd = `${databaseName}-pwd`;
 
-    const confirmation = await confirm({
+    const confirmation = options.force === true || await confirm({
       message: `This action will delete your database "${databaseName}" and cannot be reverted. Are you sure?`,
       default: false,
     });

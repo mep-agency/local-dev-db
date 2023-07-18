@@ -5,8 +5,9 @@ import { dockerCommand } from 'docker-cli-js';
 import mysql from 'mysql';
 
 import packageInfo from '../package.json';
+import config from './config';
 
-let PACKAGE_INSTALLATION_PATH = `${__dirname}/../..`;
+const PACKAGE_INSTALLATION_PATH = `${__dirname}/../..`;
 
 interface DockerImagesCommandResult {
   images: {
@@ -136,7 +137,7 @@ program
 program
   .command('create')
   .description('Creates a new database')
-  .argument('<db_name>', 'The database name')
+  .argument(config.dbName !== undefined ? '[db_name]' : '<db_name>', 'The database name', config.dbName)
   .action(async (databaseName) => {
     const username = databaseName;
     const userPwd = `${databaseName}-pwd`;
@@ -156,7 +157,7 @@ program
 program
   .command('drop')
   .description('Drops the given database and its default user (if they exist)')
-  .argument('<db_name>', 'The database name')
+  .argument(config.dbName !== undefined ? '[db_name]' : '<db_name>', 'The database name', config.dbName)
   .option('-f,--force', 'Skip safety confirmation', false)
   .action(async (databaseName, options) => {
     const username = databaseName;
@@ -207,7 +208,7 @@ program
 program
   .command('dump')
   .description('Creates a SQL dump file of the given database')
-  .argument('<db_name>', 'The database name')
+  .argument(config.dbName !== undefined ? '[db_name]' : '<db_name>', 'The database name', config.dbName)
   .action(async (databaseName) => {
     const now = new Date();
     const month = now.getMonth().toString().padStart(2, '0');

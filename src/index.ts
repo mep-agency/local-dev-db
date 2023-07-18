@@ -8,6 +8,16 @@ import packageInfo from '../package.json';
 
 let PACKAGE_INSTALLATION_PATH = `${__dirname}/../..`;
 
+interface DockerImagesCommandResult {
+  images: {
+    repository: string;
+    tag: string;
+    'image id': string;
+    created: string;
+    size: string;
+  }[];
+}
+
 const dockerCompose: typeof dockerCommand = async (command, options) => {
   try {
     return await dockerCommand(
@@ -73,7 +83,9 @@ program
       `phpmyadmin:${process.env.LDD_PMA_IMAGE_TAG ?? 'latest'}`,
     ];
 
-    const availableImagesImages = (await dockerCommand('images', {echo: false}) as {images: any[]}).images.map((imageData: {repository: string, tag: string}) => `${imageData.repository}:${imageData.tag}`).filter((imageName) => requiredImages.includes(imageName));
+    const availableImagesImages = ((await dockerCommand('images', { echo: false })) as DockerImagesCommandResult).images
+      .map((imageData) => `${imageData.repository}:${imageData.tag}`)
+      .filter((imageName) => requiredImages.includes(imageName));
 
     const missingImages = requiredImages.filter((requiredImage) => !availableImagesImages.includes(requiredImage));
 

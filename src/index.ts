@@ -201,8 +201,9 @@ program
   .command('import')
   .description('Runs all queries from the given SQL file')
   .argument('<sql_file_path>', 'The SQL file to import')
-  .action(async (sqlFilePath) => {
-    const confirmation = await confirm({
+  .option('-f,--force', 'Skip safety confirmation', false)
+  .action(async (sqlFilePath, options) => {
+    const confirmation = options.force === true || await confirm({
       message: 'This action will execute any SQL statement found in the given file and cannot be reverted. Are you sure?',
       default: false,
     });

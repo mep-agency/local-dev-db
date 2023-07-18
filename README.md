@@ -113,7 +113,7 @@ The goal of LDD is to speed up the process of setting up new projects and synchr
 
 However, there are some common use cases that require a bit more flexibility, so the following features may help.
 
-### Project config file
+### Project config files
 
 Each project usually requires its own database, and you will probably need to run most commands against it, depending on the project you are working on.
 

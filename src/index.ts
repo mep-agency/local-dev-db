@@ -101,7 +101,7 @@ program
       if (e.stderr === undefined) {
         throw e;
       }
-  
+
       console.error(`ERROR: ${e.stderr}`);
       process.exit(1);
     }

@@ -2,19 +2,26 @@ import fs from 'fs';
 import path from 'path';
 
 const JSON_CONFIG_FILE_NAME = 'ldd.json';
+const PACKAGE_JSON_PATH = `${__dirname}/../package.json`;
 
-const DEFAULT_CONFIG: JsonConfiguration = {
+const DEFAULT_CONFIG: Partial<JsonConfiguration> = {
   dbName: undefined,
 };
 
 interface JsonConfiguration {
   dbName?: string;
+  packageInfo: {
+    name: string;
+    description: string;
+    version: string;
+  };
 }
 
 const findAndReadConfig = () => {
+  let userConfig = {};
+
   try {
     let startdir = process.cwd();
-    let userConfigData = '{}';
 
     while (true) {
       var list = fs.readdirSync(startdir);
@@ -23,7 +30,7 @@ const findAndReadConfig = () => {
         // Found
         console.info(`Loading configuration from: ${path.join(startdir, JSON_CONFIG_FILE_NAME)}`);
 
-        userConfigData = fs.readFileSync(path.join(startdir, JSON_CONFIG_FILE_NAME)).toString();
+        userConfig = JSON.parse(fs.readFileSync(path.join(startdir, JSON_CONFIG_FILE_NAME)).toString());
         break;
       } else if (startdir == '/') {
         // Root dir, file not found
@@ -32,13 +39,20 @@ const findAndReadConfig = () => {
         startdir = path.normalize(path.join(startdir, '..'));
       }
     }
+  } catch (e) {
+    console.error('ERROR: Failed loading LDD configuration file...');
 
+    process.exit(1);
+  }
+
+  try {
     return {
       ...DEFAULT_CONFIG,
-      ...JSON.parse(userConfigData),
+      ...userConfig,
+      packageInfo: JSON.parse(fs.readFileSync(PACKAGE_JSON_PATH).toString()),
     } as JsonConfiguration;
   } catch (e) {
-    console.error('ERROR: Failed reading LDD configuration file...');
+    console.error('ERROR: Failed loading LDD package.json...');
 
     process.exit(1);
   }

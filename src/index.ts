@@ -4,7 +4,6 @@ import { confirm } from '@inquirer/prompts';
 import { dockerCommand } from 'docker-cli-js';
 import mysql from 'mysql';
 
-import packageInfo from '../package.json';
 import config from './config';
 
 const PACKAGE_INSTALLATION_PATH = `${__dirname}/../..`;
@@ -71,7 +70,7 @@ const execQuery = (query: string, database: string = 'defaultdb') => {
   });
 };
 
-program.name('ldd').description(packageInfo.description).version(packageInfo.version);
+program.name('ldd').description(config.packageInfo.description).version(config.packageInfo.version);
 
 program
   .command('start')

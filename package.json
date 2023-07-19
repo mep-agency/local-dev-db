@@ -1,6 +1,6 @@
 {
   "name": "@mep-agency/local-dev-db",
-  "version": "1.0.0-alpha10",
+  "version": "1.0.0-alpha11",
   "private": false,
   "description": "A zero-config local MariaDB instance for local development (using Docker)",
   "author": "Marco Lipparini <developer@liarco.net>",
@@ -31,10 +31,8 @@
   },
   "files": [
     "bin",
-    "build",
-    "docker",
-    "LICENCE",
-    "README.md"
+    "build/**/*.js",
+    "docker"
   ],
   "devDependencies": {
     "@types/mysql": "^2.15.21",

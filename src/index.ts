@@ -6,7 +6,7 @@ import mysql from 'mysql';
 
 import config from './config';
 
-const PACKAGE_INSTALLATION_PATH = `${__dirname}/../..`;
+const LDD_ROOT_PATH = `${__dirname}/..`;
 
 interface DockerImagesCommandResult {
   images: {
@@ -21,7 +21,7 @@ interface DockerImagesCommandResult {
 const dockerCompose: typeof dockerCommand = async (command, options) => {
   try {
     return await dockerCommand(
-      `compose --file "${PACKAGE_INSTALLATION_PATH}/docker/docker-compose.yml" --project-name "ldd" ${command}`,
+      `compose --file "${LDD_ROOT_PATH}/docker/docker-compose.yml" --project-name "ldd" ${command}`,
       { echo: false, ...(options ?? {}) },
     );
   } catch (e: any) {
@@ -83,18 +83,27 @@ program
       `phpmyadmin:${process.env.LDD_PMA_IMAGE_TAG ?? 'latest'}`,
     ];
 
-    const availableImagesImages = ((await dockerCommand('images', { echo: false })) as DockerImagesCommandResult).images
-      .map((imageData) => `${imageData.repository}:${imageData.tag}`)
-      .filter((imageName) => requiredImages.includes(imageName));
+    try {
+      const availableImagesImages = ((await dockerCommand('images', { echo: false })) as DockerImagesCommandResult).images
+        .map((imageData) => `${imageData.repository}:${imageData.tag}`)
+        .filter((imageName) => requiredImages.includes(imageName));
 
-    const missingImages = requiredImages.filter((requiredImage) => !availableImagesImages.includes(requiredImage));
+      const missingImages = requiredImages.filter((requiredImage) => !availableImagesImages.includes(requiredImage));
 
-    if (missingImages.length > 0) {
-      console.info('');
-      console.info('The following images will be downloaded as they are required but not available:');
-      missingImages.map((image) => console.info(` - ${image}`));
-      console.info('');
-      console.info('This may take some time, please wait...');
+      if (missingImages.length > 0) {
+        console.info('');
+        console.info('The following images will be downloaded as they are required but not available:');
+        missingImages.map((image) => console.info(` - ${image}`));
+        console.info('');
+        console.info('This may take some time, please wait...');
+      }
+    } catch (e: any) {
+      if (e.stderr === undefined) {
+        throw e;
+      }
+
+      console.error(`ERROR: ${e.stderr}`);
+      process.exit(1);
     }
 
     await dockerCompose('up -d');

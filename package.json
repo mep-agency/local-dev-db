@@ -1,7 +1,8 @@
 {
   "name": "@mep-agency/local-dev-db",
-  "version": "1.0.0-alpha13",
+  "version": "1.0.0-alpha14",
   "private": false,
+  "type": "module",
   "description": "A zero-config local MariaDB instance for local development (using Docker)",
   "author": "Marco Lipparini <developer@liarco.net>",
   "license": "MIT",

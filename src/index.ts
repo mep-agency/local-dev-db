@@ -1,12 +1,13 @@
-import fs from 'fs';
+import { fileURLToPath } from 'node:url';
+import fs from 'node:fs';
 import { program } from 'commander';
 import { confirm } from '@inquirer/prompts';
 import { dockerCommand } from 'docker-cli-js';
 import mysql from 'mysql';
 
-import config from './config';
+import config from './config.js';
 
-const LDD_ROOT_PATH = `${__dirname}/..`;
+const LDD_ROOT_PATH = fileURLToPath(new URL('..', import.meta.url));
 
 interface DockerImagesCommandResult {
   images: {

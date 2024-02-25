@@ -1,8 +1,9 @@
-import fs from 'fs';
-import path from 'path';
+import { fileURLToPath } from 'node:url';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const JSON_CONFIG_FILE_NAME = 'ldd.json';
-const PACKAGE_JSON_PATH = `${__dirname}/../package.json`;
+const PACKAGE_JSON_PATH = fileURLToPath(new URL('../package.json', import.meta.url));
 
 const DEFAULT_CONFIG: Partial<JsonConfiguration> = {
   dbName: undefined,

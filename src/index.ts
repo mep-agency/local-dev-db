@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { program } from 'commander';
 import { confirm } from '@inquirer/prompts';
 import { dockerCommand } from 'docker-cli-js';
-import mysql from 'mysql';
+import mysql from 'mysql2';
 
 import config from './config.js';
 
@@ -60,7 +60,7 @@ const execQuery = (query: string, database: string = 'defaultdb') => {
 
     connection.query(query, (error, results) => {
       if (error) {
-        console.error(`ERROR: ${error.sqlMessage}`);
+        console.error(`ERROR: ${error.message}`);
         process.exit(1);
       }
 
@@ -80,7 +80,7 @@ program
     console.info('Starting local database containers...');
 
     const requiredImages = [
-      `mariadb:${process.env.LDD_DB_IMAGE_TAG ?? 'latest'}`,
+      `mysql:${process.env.LDD_DB_IMAGE_TAG ?? 'lts'}`,
       `phpmyadmin:${process.env.LDD_PMA_IMAGE_TAG ?? 'latest'}`,
     ];
 
@@ -206,11 +206,8 @@ program
 
     fs.writeFileSync(
       `./${dumpFileName}`,
-      (
-        await dockerCompose(
-          'exec db sh -c \'exec mariadb-dump --all-databases --lock-tables -uroot -p"$MARIADB_ROOT_PASSWORD"\'',
-        )
-      ).raw,
+      (await dockerCompose('exec db sh -c \'exec mysqldump --all-databases --lock-tables -uroot -p"$MYSQL_ROOT_PASSWORD"\''))
+        .raw,
     );
   });
 
@@ -233,7 +230,7 @@ program
       `./${dumpFileName}`,
       (
         await dockerCompose(
-          `exec db sh -c \'exec mariadb-dump --databases "${databaseName}" --lock-tables -uroot -p"$MARIADB_ROOT_PASSWORD"\'`,
+          `exec db sh -c \'exec mysqldump --databases "${databaseName}" --lock-tables -uroot -p"$MYSQL_ROOT_PASSWORD"\'`,
         )
       ).raw,
     );

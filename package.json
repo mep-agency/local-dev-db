@@ -1,9 +1,9 @@
 {
   "name": "@mep-agency/local-dev-db",
-  "version": "1.0.0-alpha14",
+  "version": "1.0.0-alpha15",
   "private": false,
   "type": "module",
-  "description": "A zero-config local MariaDB instance for local development (using Docker)",
+  "description": "A zero-config local MySQL instance for local development (using Docker)",
   "author": "Marco Lipparini <developer@liarco.net>",
   "license": "MIT",
   "keywords": [
@@ -11,8 +11,7 @@
     "local",
     "database",
     "db",
-    "mysql",
-    "mariadb"
+    "mysql"
   ],
   "repository": {
     "type": "git",
@@ -36,7 +35,6 @@
     "docker"
   ],
   "devDependencies": {
-    "@types/mysql": "^2.15.21",
     "prettier": "^2.8.8",
     "typescript": "^5.1.3"
   },
@@ -44,6 +42,6 @@
     "@inquirer/prompts": "^4.0.0",
     "commander": "^12.0.0",
     "docker-cli-js": "^2.10.0",
-    "mysql": "^2.18.1"
+    "mysql2": "^3.14.0"
   }
 }

@@ -5,9 +5,9 @@
 <span class="badge-npmversion"><a href="https://www.npmjs.com/package/@mep-agency/local-dev-db" title="View this project on NPM"><img src="https://img.shields.io/npm/v/%40mep-agency/local-dev-db" alt="NPM version" /></a></span>
 <span class="badge-npmdownloads"><a href="https://www.npmjs.com/package/@mep-agency/local-dev-db" title="View this project on NPM"><img src="https://img.shields.io/npm/dt/%40mep-agency/local-dev-db" alt="NPM downloads" /></a></span>
 
-A zero-config local MariaDB instance for local development (using Docker) so you can finally stop doing things like:
+A zero-config local MySQL instance for local development (using Docker) so you can finally stop doing things like:
 
-- Using different databases for dev and prod environments (e.g. SQLite vs MariaDB/MySQL)
+- Using different databases for dev and prod environments (e.g. SQLite vs MySQL/MariaDB)
 - Installing a local database server directly on your machine
 - Spending time getting up and running in a new development environment
 
@@ -16,11 +16,11 @@ A zero-config local MariaDB instance for local development (using Docker) so you
 While this tool is designed to be installed as a dependency in your projects, it actually runs as a single database server.
 This makes it possible to optimize resources when working on multiple projects at the same time.
 
-Feel free to install this tool as a dependency in any project where you need a MariaDB/MySQL database, CLI commands will act on the same instance and all your databases will share the same storage volume.
+Feel free to install this tool as a dependency in any project where you need a MySQL/MariaDB database, CLI commands will act on the same instance and all your databases will share the same storage volume.
 
 ## Features
 
-- Runs a fully-featured MariaDB server without touching your local system
+- Runs a fully-featured MySQL server without touching your local system
 - Runs a PhpMyAdmin instance attached to the DB server so you can manage your databases with no additional software
 - Provides you with a simple set of CLI commands do run common tasks:
   - Create/drop databases and dedicated users
@@ -59,7 +59,7 @@ Run the `ldd` binary to see the available commands:
 $ yarn ldd --help
 Usage: ldd [options] [command]
 
-A zero-config local MariaDB instance for local development (using Docker)
+A zero-config local MySQL instance for local development (using Docker)
 
 Options:
   -V, --version           output the version number
@@ -139,7 +139,16 @@ Creating a new DB named "my-awesome-app"...
 
 We hope you never have to use them, but just in case, here are some ENV vars you can set on your machine to customize the behavior of the application:
 
-- `LDD_DB_IMAGE_TAG` (default: `latest`): we use the official [MariaDB](https://hub.docker.com/_/mariadb) Docker image. You can pick a different tag if you wish.
+#### Server behavior
+
+- `LDD_SQL_MODE` (default: `"ANSI,ONLY_FULL_GROUP_BY,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES,ALLOW_INVALID_DATES"`): The SQL mode to use for the MySQL server.
+- `LDD_SQL_REQUIRE_PRIMARY_KEY` (default: `ON`): Whether to require primary keys to be defined for each table.
+- `LDD_DEFAULT_STORAGE_ENGINE` (default: `InnoDB`): The default storage engine to use for the MySQL server.
+- `LDD_EXPLICIT_DEFAULTS_FOR_TIMESTAMP` (default: `ON`): Whether to use explicit defaults for timestamp columns.
+
+#### Advanced customization
+
+- `LDD_DB_IMAGE_TAG` (default: `lts`): we use the official [MySQL](https://hub.docker.com/_/mysql) Docker image. You can pick a different tag if you wish.
 - `LDD_DB_PORT` (default: `3306`): The database server will be attached to this port on your local machine. You can customize this to avoid any conflicts with other services.
 - `LDD_DB_ROOT_PASSWORD` (default: `not-secure-pwd`): This tool is not secure by design, so you should probably leave this untouched to avoid issues.
 - `LDD_PMA_IMAGE_TAG` (default: `latest`): we use the official [PhpMyAdmin](https://hub.docker.com/_/phpmyadmin) Docker image. You can pick a different tag if you wish.

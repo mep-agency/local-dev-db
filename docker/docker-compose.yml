@@ -7,7 +7,7 @@ services:
       - '${LDD_DB_PORT:-3306}:3306'
     command: >
       --sql-mode=${LDD_SQL_MODE:-"ANSI,ONLY_FULL_GROUP_BY,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES,ALLOW_INVALID_DATES"}
-      --sql-require-primary-key=${LDD_SQL_REQUIRE_PRIMARY_KEY:-ON}
+      --sql-require-primary-key=${LDD_SQL_REQUIRE_PRIMARY_KEY:-OFF}
       --default-storage-engine=${LDD_DEFAULT_STORAGE_ENGINE:-InnoDB}
       --explicit_defaults_for_timestamp=${LDD_EXPLICIT_DEFAULTS_FOR_TIMESTAMP:-ON}
     networks:

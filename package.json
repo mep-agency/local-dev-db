@@ -1,6 +1,6 @@
 {
   "name": "@mep-agency/local-dev-db",
-  "version": "1.0.0-alpha15",
+  "version": "1.0.0-alpha16",
   "private": false,
   "type": "module",
   "description": "A zero-config local MySQL instance for local development (using Docker)",

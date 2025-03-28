@@ -142,7 +142,7 @@ We hope you never have to use them, but just in case, here are some ENV vars you
 #### Server behavior
 
 - `LDD_SQL_MODE` (default: `"ANSI,ONLY_FULL_GROUP_BY,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES,ALLOW_INVALID_DATES"`): The SQL mode to use for the MySQL server.
-- `LDD_SQL_REQUIRE_PRIMARY_KEY` (default: `ON`): Whether to require primary keys to be defined for each table.
+- `LDD_SQL_REQUIRE_PRIMARY_KEY` (default: `OFF`): Whether to require primary keys to be defined for each table.
 - `LDD_DEFAULT_STORAGE_ENGINE` (default: `InnoDB`): The default storage engine to use for the MySQL server.
 - `LDD_EXPLICIT_DEFAULTS_FOR_TIMESTAMP` (default: `ON`): Whether to use explicit defaults for timestamp columns.
 

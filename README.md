@@ -145,6 +145,7 @@ We hope you never have to use them, but just in case, here are some ENV vars you
 - `LDD_SQL_REQUIRE_PRIMARY_KEY` (default: `OFF`): Whether to require primary keys to be defined for each table.
 - `LDD_DEFAULT_STORAGE_ENGINE` (default: `InnoDB`): The default storage engine to use for the MySQL server.
 - `LDD_EXPLICIT_DEFAULTS_FOR_TIMESTAMP` (default: `ON`): Whether to use explicit defaults for timestamp columns.
+- `LDD_MYSQL_NATIVE_PASSWORD` (default: `ON`): Whether to enable the native MySQL password hashing algorithm.
 
 #### Advanced customization
 

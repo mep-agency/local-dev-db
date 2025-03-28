@@ -10,6 +10,7 @@ services:
       --sql-require-primary-key=${LDD_SQL_REQUIRE_PRIMARY_KEY:-OFF}
       --default-storage-engine=${LDD_DEFAULT_STORAGE_ENGINE:-InnoDB}
       --explicit_defaults_for_timestamp=${LDD_EXPLICIT_DEFAULTS_FOR_TIMESTAMP:-ON}
+      --mysql-native-password=${LDD_MYSQL_NATIVE_PASSWORD:-ON}
     networks:
       - private
     volumes:

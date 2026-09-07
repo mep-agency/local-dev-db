@@ -182,7 +182,7 @@ Run the local CLI with `node bin/ldd.js --help` after building it.
 
 1. Start from the latest upstream commit and confirm the next version has not already been released.
 2. Update the version in both `package.json` and `package-lock.json` (including the root package entry).
-3. Run `npm ci`, `npm run lint`, and `npm pack --dry-run`. The `prepack` script builds the CLI for both packing and publishing. Confirm the package contains `bin/ldd.js`, the compiled JavaScript in `build/`, and `docker/docker-compose.yml`.
-4. Commit the changes and create a GitHub release using the package version as its tag. The existing release workflow publishes to npm using `NPM_TOKEN`.
+3. Run `npm ci`, `npm run lint`, and `npm publish --dry-run --tag latest`. The `prepack` script builds the CLI for both packing and publishing. Confirm the package contains `bin/ldd.js`, the compiled JavaScript in `build/`, and `docker/docker-compose.yml`.
+4. Commit the changes and create a GitHub release using the package version as its tag. The existing release workflow publishes to npm using `NPM_TOKEN` and explicitly sets the `latest` distribution tag, including for alpha versions. npm requires an explicit tag when publishing a prerelease.
 
 This repository uses npm and `package-lock.json` as its only dependency lockfile. Use `npm ci` for reproducible installs. Add or update dependencies with `npm install` and commit the resulting changes to both `package.json` and `package-lock.json`.

@@ -28,7 +28,7 @@
     "prepack": "npm run build"
   },
   "bin": {
-    "ldd": "./bin/ldd.js"
+    "ldd": "bin/ldd.js"
   },
   "files": [
     "bin",

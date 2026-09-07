@@ -23,7 +23,7 @@ const dockerCompose: typeof dockerCommand = async (command, options) => {
   try {
     return await dockerCommand(
       `compose --file "${LDD_ROOT_PATH}/docker/docker-compose.yml" --project-name "ldd" ${command}`,
-      { echo: false, ...(options ?? {}) },
+      { echo: false, ...options, env: { ...process.env, ...options?.env } },
     );
   } catch (e: any) {
     if (e.stderr === undefined) {
@@ -80,12 +80,14 @@ program
     console.info('Starting local database containers...');
 
     const requiredImages = [
-      `mysql:${process.env.LDD_DB_IMAGE_TAG ?? 'lts'}`,
-      `phpmyadmin:${process.env.LDD_PMA_IMAGE_TAG ?? 'latest'}`,
+      `mysql:${process.env.LDD_DB_IMAGE_TAG || 'lts'}`,
+      `phpmyadmin:${process.env.LDD_PMA_IMAGE_TAG || 'latest'}`,
     ];
 
     try {
-      const availableImagesImages = ((await dockerCommand('images', { echo: false })) as DockerImagesCommandResult).images
+      const availableImagesImages = (
+        (await dockerCommand('images', { echo: false, env: process.env })) as DockerImagesCommandResult
+      ).images
         .map((imageData) => `${imageData.repository}:${imageData.tag}`)
         .filter((imageName) => requiredImages.includes(imageName));
 

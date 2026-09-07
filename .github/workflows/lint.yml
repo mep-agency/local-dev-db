@@ -13,4 +13,4 @@ jobs:
 
       - run: npm ci
       - run: npm run lint
-      - run: npm pack --dry-run
+      - run: npm publish --dry-run --tag latest

@@ -1,4 +1,4 @@
-name: Publish Package to npmjs.org
+name: Stage Package on npmjs.org
 on:
   release:
     types: [published]
@@ -6,6 +6,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v7
 
@@ -14,9 +17,10 @@ jobs:
           node-version: '24.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@mep-agency'
+          package-manager-cache: false
 
+      # Staged publishing requires npm >= 11.15.0.
+      - run: npm install --global npm@11.19.0
       - run: npm ci
       - run: npm run lint
-      - run: npm publish --tag latest
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm stage publish --tag latest
